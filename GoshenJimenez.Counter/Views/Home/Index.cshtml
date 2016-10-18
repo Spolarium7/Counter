@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Goshen Jimenez";
+}
+
+<h1 id="count">@ViewBag.Count</h1>
+
+
+<button type="button" class="btn btn-success" id="increase">Increase</button>
+<button type="button" class="btn btn-info" id="reset">Reset</button>
+<br/><br />
+<div class="alert alert-danger" id="error">
+    <strong>Danger!</strong> <span>Indicates a dangerous or potentially negative action.</span>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#error").hide();
+        $("#increase").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/home/increase',
+                success: function (data, textStatus) {
+                    $("#count").html(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    $("#error strong").html("Warning");
+                    $("#error span").html("Up to 10 only.");
+                    $("#error").show();
+                }
+            });
+        });
+        $("#reset").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/home/reset',
+                success: function (data, textStatus) {
+                    $("#count").html(data);
+                    $("#error").hide();
+                }
+            });
+        });
+    });
+</script>
